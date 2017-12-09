@@ -3,7 +3,7 @@
 #
 # Res andy
 
-AppVersion = "0.6.10 CHS"
+AppVersion = "0.6.10"
  
  
 
@@ -39,7 +39,7 @@ class App:
 		self.ChunkSizes = [0.5,1,2,4,8,16,32,64,128,256]
 		self.master = master
 		self.master.geometry("445x250+300+75")
-		self.master.wm_title("小蚁运动相机 [汉化:Tiya Anlite](作者Andy_S) | 程序版本 %s" %AppVersion)
+		self.master.wm_title("Xiaomi Yi C&C by Andy_S | ver %s" %AppVersion)
 		self.statusBlock = LabelFrame(self.master, bd=1, relief=SUNKEN, text="")
 		self.statusBlock.pack(side=BOTTOM, fill=X)
 		self.status = Label(self.statusBlock, width=28, text="Disconnected", anchor=W)
@@ -56,20 +56,20 @@ class App:
 		root.config(menu=self.menu)
 		
 		self.Cameramenu = Menu(self.menu, tearoff=0)
-		self.menu.add_cascade(label="相机", menu=self.Cameramenu, underline=0)
-		self.Cameramenu.add_command(label="信息", command=self.ActionInfo, state=DISABLED, underline=0)
-		self.Cameramenu.add_command(label="格式化", command=self.ActionFormat, state=DISABLED, underline=0)
-		self.Cameramenu.add_command(label="重启", command=self.ActionReboot, state=DISABLED, underline=0)
-		self.Cameramenu.add_command(label="恢复出厂设置", command=self.ActionFactory, state=DISABLED, underline=8)
+		self.menu.add_cascade(label="Camera", menu=self.Cameramenu, underline=0)
+		self.Cameramenu.add_command(label="Info", command=self.ActionInfo, state=DISABLED, underline=0)
+		self.Cameramenu.add_command(label="Format", command=self.ActionFormat, state=DISABLED, underline=0)
+		self.Cameramenu.add_command(label="Reboot", command=self.ActionReboot, state=DISABLED, underline=0)
+		self.Cameramenu.add_command(label="Factory settings", command=self.ActionFactory, state=DISABLED, underline=8)
 		if self.ExpertMode == "":
-			self.Cameramenu.add_command(label="高级模式", command=self.ExpertEnable, state=DISABLED)
+			self.Cameramenu.add_command(label="Expert Mode", command=self.ExpertEnable, state=DISABLED)
 		self.Cameramenu.add_separator()
-		self.Cameramenu.add_command(label="退出", command=self.quit, underline=1)
+		self.Cameramenu.add_command(label="Exit", command=self.quit, underline=1)
 		
 		self.helpmenu = Menu(self.menu, tearoff=0)
-		self.menu.add_cascade(label="帮助", menu=self.helpmenu, underline=0)
-		self.helpmenu.add_command(label="捐款", command=lambda aurl=self.DonateUrl:webbrowser.open_new(aurl), underline=0)
-		self.helpmenu.add_command(label="关于....", command=self.AboutProg, underline=0)
+		self.menu.add_cascade(label="Help", menu=self.helpmenu, underline=0)
+		self.helpmenu.add_command(label="Donate", command=lambda aurl=self.DonateUrl:webbrowser.open_new(aurl), underline=0)
+		self.helpmenu.add_command(label="About...", command=self.AboutProg, underline=0)
 		self.UpdateCheck()
 		self.ConnWindow()		
 
@@ -152,33 +152,33 @@ class App:
 		self.addrv4 = StringVar()
 		self.addrv5 = StringVar()
 		self.addrv6 = StringVar()
-		b = Button(self.camconn, text="连接相机", width=11, command=self.CamConnect)
+		b = Button(self.camconn, text="Connect C&C", width=11, command=self.CamConnect)
 		b.focus_set()
 		b.grid(row=1, column=1, padx=10, pady=2)
-		c = Checkbutton(self.camconn, text="自动连接", variable=self.addrv3, onvalue="on", offvalue="", height=1)
+		c = Checkbutton(self.camconn, text="Autoconnect", variable=self.addrv3, onvalue="on", offvalue="", height=1)
 		c.grid(row=2, column=1)
 
 
-		l = Label(self.camconn, width=12, text="IP地址：", anchor=E)
+		l = Label(self.camconn, width=12, text="IP address:", anchor=E)
 		l.grid(row=1, column=2)
 		e1 = Entry(self.camconn, textvariable=self.addrv1, width=20)
 		e1.grid(row=1, column=3)
-		l = Label(self.camconn, width=12, text="VLC程序地址", anchor=E)
+		l = Label(self.camconn, width=12, text="Own VLC Path:", anchor=E)
 		l.grid(row=2, column=2)
 		e5 = Entry(self.camconn, textvariable=self.addrv5, width=20)
 		e5.grid(row=2, column=3)
-		l = Label(self.camconn, width=17, text="*默认地址 = .", anchor=W)
+		l = Label(self.camconn, width=17, text="*default path = .", anchor=W)
 		l.grid(row=3, column=3, pady=3)
 
-		l = Label(self.camconn, width=10, text="JSON端口：", anchor=E)
+		l = Label(self.camconn, width=10, text="Json Port:", anchor=E)
 		l.grid(row=1, column=4)
 		e2 = Entry(self.camconn, textvariable=self.addrv2, width=4)
 		e2.grid(row=1, column=5)
-		l = Label(self.camconn, width=10, text="数据端口：", anchor=E)
+		l = Label(self.camconn, width=10, text="Data Port:", anchor=E)
 		l.grid(row=2, column=4)
 		e3 = Entry(self.camconn, textvariable=self.addrv4, width=4)
 		e3.grid(row=2, column=5)
-		l = Label(self.camconn, width=10, text="WEB端口：", anchor=E)
+		l = Label(self.camconn, width=10, text="Web Port:", anchor=E)
 		l.grid(row=3, column=4)
 		e4 = Entry(self.camconn, textvariable=self.addrv6, width=4)
 		e4.grid(row=3, column=5)
@@ -207,7 +207,7 @@ class App:
 		except Exception:
 			newversion = "0"
 		if newversion > AppVersion:
-			if tkMessageBox.askyesno("发现新版本", "发现新版本 (%s)\n本程序版本为 %s\n\n打开下载页面？" %(newversion, AppVersion)):
+			if tkMessageBox.askyesno("New version found", "NEW VERSION FOUND (%s)\nYours is %s\n\nOpen download page?" %(newversion, AppVersion)):
 				webbrowser.open_new(self.GitUrl)
 
 
@@ -246,7 +246,7 @@ class App:
 	
 	
 	def AboutProg(self):
-		tkMessageBox.showinfo("关于", "小蚁运动相机控制与配置程序\n汉化 Tiya Anlite\n\nControl&Configure | ver. %s\nCreated by Andy_S, 2015\n\nandys@deltaflyer.cz" %AppVersion)
+		tkMessageBox.showinfo("About", "Control&Configure | ver. %s\nCreated by Andy_S, 2015\n\nandys@deltaflyer.cz" %AppVersion)
 	
 	def CamConnect(self):
 		try:
@@ -284,10 +284,10 @@ class App:
 						if self.camconfig["sdcard_need_format"] != "no-need":
 							if not self.ActionForceFormat():
 								self.SDOK = False
-								self.SDLabelText="SD卡未被格式化！\n\n请插入可用的SD卡或者将此SD格式化！\n\n然后重启相机。"
+								self.SDLabelText="SD memory card not formatted!\n\nPlease insert formatted SD card or format this one\n\nand restart C&C."
 					else:
 						self.SDOK = False
-						self.SDLabelText="没有检测到SD卡\n\n请关闭相机并插入SD卡。"
+						self.SDLabelText="No SD memory card inserted in camera!\n\nPlease power off camera, insert SD & restart C&C."
 		
 					self.Cameramenu.entryconfig(0, state="normal")
 					if self.ExpertMode == "":
@@ -312,7 +312,7 @@ class App:
 			if self.DebugMode:
 				self.DebugLog("CamConn", e)
 			self.connected = False
-			tkMessageBox.showerror("连接", "无法连接至此地址")
+			tkMessageBox.showerror("Connect", "Cannot connect to the address specified")
 			self.srv.close()
 	
 
@@ -449,16 +449,16 @@ class App:
 	
 	def ShowExpertMenu(self):
 		self.Expertmenu = Menu(self.menu, tearoff=0)
-		self.menu.add_cascade(label="扩展选项", menu=self.Expertmenu, underline=0)
-		self.Expertmenu.add_command(label="显示所有相机的配置值", command=self.ExpertVariables, underline=0)
-		self.Expertmenu.add_command(label="打开Telnet支持", command=self.ExpertTelnet, underline=0)
+		self.menu.add_cascade(label="ExpertMenu", menu=self.Expertmenu, underline=0)
+		self.Expertmenu.add_command(label="Show all camera variables", command=self.ExpertVariables, underline=0)
+		self.Expertmenu.add_command(label="Enable Telnet access", command=self.ExpertTelnet, underline=0)
 		self.ExpertmenuChunkSize = Menu(self.menu, tearoff=0)
 		self.Expertmenu.add_cascade(label="File transfer chunk size", menu=self.ExpertmenuChunkSize, underline=0)
 		self.ShowExpertChunkMenu()
 		if self.DebugMode:
-			self.Expertmenu.add_command(label="关闭调试模式", command=self.DebugToggle, underline=8)			
+			self.Expertmenu.add_command(label="Disable debug mode", command=self.DebugToggle, underline=8)			
 		else:
-			self.Expertmenu.add_command(label="打开调试模式", command=self.DebugToggle, underline=7)			
+			self.Expertmenu.add_command(label="Enable debug mode", command=self.DebugToggle, underline=7)			
 		self.Expertmenu.add_command(label="Activate camera jetpack", command=self.ActionInfo, state=DISABLED, underline=0)
 		self.Expertmenu.add_command(label="Explode camera", command=self.ActionInfo, state=DISABLED, underline=0)
 		self.Expertmenu.add_command(label="Kill ALL puppies", command=self.ActionInfo, state=DISABLED, underline=0)
@@ -492,7 +492,7 @@ class App:
 		self.Comm(tosend)
 		tosend = '{"msg_id":1286,"token":%s,"param":"enable_info_display.script", "offset":0, "size":0, "md5sum":"d41d8cd98f00b204e9800998ecf8427e"}' %self.token
 		self.Comm(tosend)
-		if tkMessageBox.askyesno("重启相机", "相机需要重启使telnet功能生效\n\n现在重启？ (程序会关闭)"):
+		if tkMessageBox.askyesno("Restart Camera", "You have to reboot camera for telnet to be enabled.\n\nReboot now? (C&C will close)"):
 			tosend = '{"msg_id":2,"token":%s, "type":"dev_reboot", "param":"on"}' %self.token
 			self.srv.send(tosend)
 			self.quit()
@@ -529,7 +529,7 @@ class App:
 		if self.SDOK:
 			self.MenuControl()
 		else:
-			l = Label(self.mainwindow, width=40, text="没有检测到SD卡\n\n请关闭相机并插入SD卡。", anchor=CENTER)
+			l = Label(self.mainwindow, width=40, text="No SD memory card inserted in camera!\n\nPlease power off camera, insert SD & restart C&C.", anchor=CENTER)
 			l.pack(side=TOP, fill=BOTH)
 
 	
@@ -545,12 +545,12 @@ class App:
 		self.content = Frame(self.mainwindow)
 		self.controlbuttons = Frame(self.content)
 		if self.camconfig["capture_mode"] == "precise quality":
-			self.bphoto = Button(self.controlbuttons, text="拍照", width=13, command=self.ActionPhoto, bg="#ccccff")
+			self.bphoto = Button(self.controlbuttons, text="Take a \nPHOTO", width=13, command=self.ActionPhoto, bg="#ccccff")
 		elif self.camconfig["capture_mode"] == "precise quality cont.":
 			if self.camconfig["precise_cont_capturing"] == "off":
-				self.bphoto = Button(self.controlbuttons, text="开始延时摄像", width=13, command=self.ActionPhoto, bg="#66ff66")
+				self.bphoto = Button(self.controlbuttons, text="Start\nTIMELAPSE", width=13, command=self.ActionPhoto, bg="#66ff66")
 			else:
-				self.bphoto = Button(self.controlbuttons, text="停止延时摄像", width=13, command=self.ActionPhoto, bg="#ff6666")
+				self.bphoto = Button(self.controlbuttons, text="Stop\nTIMELAPSE", width=13, command=self.ActionPhoto, bg="#ff6666")
 		elif self.camconfig["capture_mode"] == "burst quality":
 			self.bphoto = Button(self.controlbuttons, text="Burst \nPHOTOS", width=13, command=self.ActionPhoto, bg="#ffccff")
 		elif self.camconfig["capture_mode"] == "precise self quality":
@@ -559,11 +559,11 @@ class App:
 		
 	
 		if "record" in self.camconfig["app_status"]:
-			self.brecord = Button(self.controlbuttons, text="停止摄像", width=7, command=self.ActionRecordStop, bg="#ff6666")
+			self.brecord = Button(self.controlbuttons, text="STOP\nRecording", width=7, command=self.ActionRecordStop, bg="#ff6666")
 			self.bphoto.config(state=DISABLED)
 			self.bphoto.update_idletasks() 
 		else:
-			self.brecord = Button(self.controlbuttons, text="开始摄像", width=7, command=self.ActionRecordStart, bg="#66ff66")
+			self.brecord = Button(self.controlbuttons, text="START\nRecording", width=7, command=self.ActionRecordStart, bg="#66ff66")
 		self.brecord.pack(side=LEFT, padx=10, ipadx=5, pady=5)
 		if self.camconfig["capture_mode"] == "precise quality cont.":
 			if self.camconfig["precise_cont_capturing"] == "on":
@@ -572,9 +572,9 @@ class App:
 
 
 		if "off" in self.camconfig["preview_status"] or "record" in self.camconfig["app_status"]:
-			self.bstream = Button(self.controlbuttons, text="实时预览", width=7, command=self.ActionVideoStart, bg="#ffff66", state=DISABLED)
+			self.bstream = Button(self.controlbuttons, text="LIVE\nView", width=7, command=self.ActionVideoStart, bg="#ffff66", state=DISABLED)
 		else:
-			self.bstream = Button(self.controlbuttons, text="实时预览", width=7, command=self.ActionVideoStart, bg="#ffff66")
+			self.bstream = Button(self.controlbuttons, text="LIVE\nView", width=7, command=self.ActionVideoStart, bg="#ffff66")
 		self.bstream.pack(side=LEFT, padx=10, ipadx=5, pady=5)
 
 		if self.ZoomLevelValue == "":
