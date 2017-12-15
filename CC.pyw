@@ -305,7 +305,7 @@ class App:
 						time.sleep(1)
 						waiter += 1
 					else:
-						raise Exception('Connection', 'failed') #throw an exception
+						raise Exception('连接相机', '连接失败！') #throw an exception
 
 
 		except Exception as e:
@@ -440,9 +440,9 @@ class App:
 		charge = resp["param"]
                         	
 		if Ctype == "adapter":
-			Ctype = "Charging"
+			Ctype = "充电中"
 		else:
-			Ctype = "Battery"
+			Ctype = "电池"
 		battery = "%s: %s%%" %(Ctype, charge)
 		self.battery.config(text=battery) #display usage message in statusbar
 		self.battery.update_idletasks()
@@ -483,7 +483,7 @@ class App:
 		for pname in sorted(self.camconfig):
 			pvalue = self.camconfig[pname]
 			toshow += "%s: %s\n" %(pname, pvalue)
-		tkMessageBox.showinfo("All current camera variables", toshow)
+		tkMessageBox.showinfo("所有可用参数", toshow)
 			
 	def ExpertTelnet(self):
 		tosend = '{"msg_id":1283,"token":%s,"param":"."}' %self.token
@@ -511,16 +511,16 @@ class App:
 		self.mainwindow = Frame(self.master, width=550, height=400)
 		self.topbuttons = Frame(self.mainwindow, bg="#aaaaff")
 		if self.SDOK:
-			self.MainButtonControl = Button(self.topbuttons, text="Control", width=7, command=self.MenuControl, underline=6)
+			self.MainButtonControl = Button(self.topbuttons, text="控制", width=7, command=self.MenuControl, underline=6)
 			self.master.bind("l",self.MenuControl)
 			self.master.bind("L",self.MenuControl)
 			self.MainButtonControl.pack(side=LEFT, padx=10, ipadx=5, pady=5)
-		self.MainButtonConfigure = Button(self.topbuttons, text="Configure", width=7, command=self.MenuConfig, underline=5)
+		self.MainButtonConfigure = Button(self.topbuttons, text="配置", width=7, command=self.MenuConfig, underline=5)
 		self.master.bind("g",self.MenuConfig)
 		self.master.bind("G",self.MenuConfig)
 		self.MainButtonConfigure.pack(side=LEFT, padx=10, ipadx=5, pady=5)
 		if self.SDOK:
-			self.MainButtonFiles = Button(self.topbuttons, text="Files", width=7, command=self.FileManager, underline=0)
+			self.MainButtonFiles = Button(self.topbuttons, text="文件", width=7, command=self.FileManager, underline=0)
 			self.master.bind("f",self.FileManager)
 			self.master.bind("F",self.FileManager)
 			self.MainButtonFiles.pack(side=LEFT, padx=10, ipadx=5, pady=5)
@@ -622,7 +622,7 @@ class App:
 		
 	
 	def ExpertEnable(self):
-		if tkMessageBox.askyesno("Enable expert mode", "Are you sure you want to\nENABLE EXPERT MODE?\n\nThis will enable potentionaly dangerous,\nbut also enhanced and useful features!\n\nBy accepting this you accept\nall responsibility for your actions you do\nin expert mode.\n\nAuthor of this program does not take ANY responsibility\nfor potentional damage to your camera\ncaused by your improper usage of this software."):
+		if tkMessageBox.askyesno("打开扩展模式", "你确认要打开\n扩展模式\n\n这可能会有潜在的危险性\n但能提供强大和有用的功能！\n\n你将为此同意承担\n后面的操作可能带来的后果\nin expert mode.\n\n由于不正确使用软件\n造成相机潜在性的损坏的\n软件作者ANY不为此承担任何责任！"):
 			self.ExpertMode = self.camconfig["serial_number"]
 			tosend = {"ExpertMode":self.ExpertMode}
 			self.Settings(add=tosend)
@@ -646,7 +646,7 @@ class App:
 
 
 	def ActionForceFormat(self):
-		if tkMessageBox.askyesno("Format memory card", "Memory card is not formatted\nFORMAT MEMORY CARD NOW?\n\nThis action can't be undone\nALL PHOTOS & VIDEOS WILL BE LOST!"):
+		if tkMessageBox.askyesno("格式化存储卡", "存储卡尚未被格式化\n现在格式化存储卡吗？\n\n此操作无法撤销\n你将会丢失存储卡内所有数据！"):
 			tosend = '{"msg_id":4,"token":%s}' %self.token
 			self.Comm(tosend)
 			return(True)
@@ -654,7 +654,7 @@ class App:
 			return(False)
 
 	def ActionFormat(self):
-		if tkMessageBox.askyesno("Format memory card", "Are you sure you want to\nFORMAT MEMORY CARD?\n\nThis action can't be undone\nALL PHOTOS & VIDEOS WILL BE LOST!"):
+		if tkMessageBox.askyesno("格式化存储卡", "是否确认要\n格式化存储卡？\n\n此操作无法撤销\n你将会丢失存储卡内所有数据！"):
 			tosend = '{"msg_id":4,"token":%s}' %self.token
 			self.Comm(tosend)
 		self.UpdateUsage()
@@ -662,13 +662,13 @@ class App:
 			self.FilePrintList()
 
 	def ActionReboot(self):
-		if tkMessageBox.askyesno("Reboot camera", "Are you sure you want to\nreboot camera?\n\nThis will close C&C"):
+		if tkMessageBox.askyesno("重启相机", "是否确认要\n重启相机？\n\n此操作会关闭本软件"):
 			tosend = '{"msg_id":2,"token":%s, "type":"dev_reboot", "param":"on"}' %self.token
 			self.srv.send(tosend)
 			self.quit()
 
 	def ActionFactory(self):
-		if tkMessageBox.askyesno("Reboot camera", "Are you sure you want to\nRESET CAMERA TO FACTORY SETTINGS?\n\nThis will close C&C"):
+		if tkMessageBox.askyesno("恢复出厂设置", "是否确认要\n恢复相机出厂设置？\n\n此操作会关闭本软件"):
 			tosend = '{"msg_id":2,"token":%s, "type":"restore_factory_settings", "param":"on"}' %self.token
 			self.srv.send(tosend)
 			self.quit()
@@ -716,7 +716,7 @@ class App:
 					torun = '"%s" rtsp://%s:554/live' %(self.custom_vlc_path, self.camaddr)
 					subprocess.Popen(torun, shell=True)
 				else:
-					tkMessageBox.showinfo("Live View", "VLC Player not found\nUse your preferred player to view:\n rtsp://%s:554/live" %(self.camaddr))
+					tkMessageBox.showinfo("预览", "未找到VLC播放器\n请使用支持流媒体的播放器访问：\n rtsp://%s:554/live" %(self.camaddr))
 			else:
 				mysys = platform.system()
 				if mysys == "Windows":
@@ -728,19 +728,19 @@ class App:
 							torun = '"c:/Program Files (x86)/VideoLan/VLC/vlc.exe" rtsp://%s:554/live' %(self.camaddr)
 							subprocess.Popen(torun, shell=True)
 						else:
-							tkMessageBox.showinfo("Live View", "VLC Player not found\nUse your preferred player to view:\n rtsp://%s:554/live" %(self.camaddr))
+							tkMessageBox.showinfo("预览", "未找到VLC播放器\n请使用支持流媒体的播放器访问：\n rtsp://%s:554/live" %(self.camaddr))
 				elif mysys == "Darwin":
 					if os.path.isfile("/Applications/VLC.app/Contents/MacOS/VLC"):
 						torun = '"/Applications/VLC.app/Contents/MacOS/VLC" rtsp://%s:554/live' %(self.camaddr)
 						subprocess.Popen(torun, shell=True)
 					else:
-						tkMessageBox.showinfo("Live View", "VLC Player not found\nUse your preferred player to view:\n rtsp://%s:554/live" %(self.camaddr))
+						tkMessageBox.showinfo("预览", "未找到VLC播放器\n请使用支持流媒体的播放器访问：\n rtsp://%s:554/live" %(self.camaddr))
 				else:
-					tkMessageBox.showinfo("Live View", "VLC Player not found\nUse your preferred player to view:\n rtsp://%s:554/live" %(self.camaddr))
+					tkMessageBox.showinfo("预览", "未找到VLC播放器\n请使用支持流媒体的播放器访问：\n rtsp://%s:554/live" %(self.camaddr))
 		except Exception as e:
 			if self.DebugMode:
 				self.DebugLog("VlcNotFound", e)
-			tkMessageBox.showinfo("Live View", "VLC Player not found\nUse your preferred player to view:\n rtsp://%s:554/live" %(self.camaddr))
+			tkMessageBox.showinfo("预览", "未找到VLC播放器\n请使用支持流媒体的播放器访问：\n rtsp://%s:554/live" %(self.camaddr))
 	
 
 	def MenuConfig_Apply(self, *args):
